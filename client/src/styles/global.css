@@ -1,0 +1,17 @@
+:root {
+  --primary: #fa4640;
+  --secondary: #008cff;
+  --secondary-light: #0033ff;
+  --gray: #e7e7e7;
+  --light-gray: #f6f6f6;
+  --primary-font: #000;
+  --secondary-font: #fff;
+  --box-shadow: #a8a8a8 0px 3px 6px;
+  --link-hover: #a8a8a8;
+}
+
+body {
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+}
