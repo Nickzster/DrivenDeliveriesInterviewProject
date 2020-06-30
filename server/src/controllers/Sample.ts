@@ -21,6 +21,23 @@ const generateData = (SampleModel: ISample) => {
   };
 };
 
+export const getMultipleSamples = async (
+  queries = { page: 1 },
+  ITEMS_PER_FETCH = 5
+) => {
+  try {
+    const { page } = queries;
+    let searchParams = {};
+    //WARNING: This gets sent back unprotected!
+    return await Sample.find(searchParams)
+      .sort({ date: -1 })
+      .skip((page - 1) * ITEMS_PER_FETCH)
+      .limit(ITEMS_PER_FETCH);
+  } catch (err) {
+    return generateError(err);
+  }
+};
+
 export const createSample = async (newId, newMessage) => {
   try {
     if (!!newId && !!newMessage) {
