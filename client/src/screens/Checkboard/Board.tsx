@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./styles/board.css";
 import { generateBoard } from "../../lib/Board/GenerateBoard";
+import Piece from "../../components/Piece";
 
 const Board = () => {
   const [size, updateSize] = useState("8");
@@ -16,8 +17,10 @@ const Board = () => {
       <div className='board'>
         {boardSize.map((rows) => (
           <div className='rows'>
-            {rows.map((element: string) => (
-              <p className='element'>{element}</p>
+            {rows.map((element) => (
+              <p className='element'>
+                <Piece color={element.color} shape={element.shape} />
+              </p>
             ))}
           </div>
         ))}
