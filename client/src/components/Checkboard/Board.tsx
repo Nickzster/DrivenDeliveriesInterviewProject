@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles/board.css";
 import { generateBoard, initalizeBoard, PieceProps } from "../../lib/Board";
-import Piece from "../../components/Piece";
+import Piece from "../Piece";
 
 interface Props {
   board: PieceProps[][];
