@@ -1,0 +1,31 @@
+.board {
+}
+
+.element {
+  padding: 2em;
+  max-width: 32px;
+  max-height: 32px;
+  min-height: 32px;
+  min-width: 32px;
+  border: 1px solid black;
+  background-color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.rows {
+  display: flex;
+  flex-direction: row;
+}
+
+.screen {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+p:nth-child(0) {
+  background-color: black;
+}
