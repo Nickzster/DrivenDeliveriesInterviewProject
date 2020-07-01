@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./styles/board.css";
-import { generateBoard } from "../../lib/Board/GenerateBoard";
+import { generateBoard } from "../../lib/Board";
 import Piece from "../../components/Piece";
 
 const Board = () => {
