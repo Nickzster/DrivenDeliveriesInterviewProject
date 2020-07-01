@@ -26,6 +26,10 @@
   align-items: center;
 }
 
-p:nth-child(0) {
+.rows:nth-child(even) > p:nth-child(even) {
+  background-color: black;
+}
+
+.rows:nth-child(odd) > p:nth-child(odd) {
   background-color: black;
 }
