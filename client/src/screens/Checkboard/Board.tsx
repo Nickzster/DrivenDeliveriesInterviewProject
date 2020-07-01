@@ -3,15 +3,13 @@ import "./styles/board.css";
 import { generateBoard } from "../../lib/Board/GenerateBoard";
 
 const Board = () => {
-  const [form, updateForm] = useState({
-    num: 8,
-  });
-  const [boardSize, updateBoardSize] = useState(generateBoard(8));
+  const [size, updateSize] = useState("8");
+  const [boardSize, updateBoardSize] = useState(generateBoard(size));
   const onChange = (e: any) => {
-    updateForm({ ...form, [e.target.name]: e.target.value });
+    updateSize(e.target.value);
   };
   const onSubmit = (e: any) => {
-    updateBoardSize(generateBoard(form.num));
+    updateBoardSize(generateBoard(size));
   };
   return (
     <div className='screen'>
@@ -26,8 +24,8 @@ const Board = () => {
       </div>
       <input
         type='number'
-        name='num'
-        value={form.num}
+        name='size'
+        value={size}
         onChange={(e) => onChange(e)}
         placeholder='Insert size here'
       ></input>
