@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { initalizeBoard } from "../../lib/Board";
+import { initalizeBoard, changeBoard } from "../../lib/Board";
 import CheckerBoard from "../../components/Checkboard";
 import ChangeSize from "../../components/ChangeSize";
 
@@ -7,28 +7,40 @@ import "./styles/game.css";
 import Players from "../../components/Player";
 
 const Game = () => {
-  const [playerOne, updatePlayerOne] = useState({
-    color: "red",
-    shape: "circle",
-  });
-  const [playerTwo, updatePlayerTwo] = useState({
-    color: "black",
-    shape: "circle",
+  const [playerChoices, updatePlayerChoices] = useState({
+    playerOneColor: "red",
+    playerOneShape: "circle",
+    playerTwoColor: "black",
+    playerTwoShape: "circle",
   });
   const [size, updateSize] = useState("8");
   const [board, updateBoard] = useState(initalizeBoard(size));
   //TODO: Refactor this into a single function
-  const updatePlayer1 = (e: any) => {
-    updatePlayerOne({ ...playerOne, [e.target.name]: e.target.value });
-  };
-  const updatePlayer2 = (e: any) => {
-    updatePlayerTwo({ ...playerTwo, [e.target.name]: e.target.value });
+  const updatePlayer = (e: any) => {
+    updatePlayerChoices({ ...playerChoices, [e.target.name]: e.target.value });
   };
   const onChange = (e: any) => {
     updateSize(e.target.value);
   };
   const onSubmit = (e: any) => {
     updateBoard(initalizeBoard(size));
+  };
+  const repaint = (e: any) => {
+    updateBoard(
+      changeBoard(
+        {
+          color: playerChoices.playerOneColor,
+          shape: playerChoices.playerOneShape,
+          belongsTo: 0,
+        },
+        {
+          color: playerChoices.playerTwoColor,
+          shape: playerChoices.playerTwoShape,
+          belongsTo: 1,
+        },
+        board
+      )
+    );
   };
   return (
     <div className='game'>
@@ -39,7 +51,7 @@ const Game = () => {
         name='size'
         value={size}
       />
-      <Players playerOneCB={updatePlayer1} playerTwoCB={updatePlayer2} />
+      <Players onChange={updatePlayer} repaint={repaint} />
     </div>
   );
 };

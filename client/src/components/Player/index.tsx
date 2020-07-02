@@ -1,46 +1,54 @@
 import React, { useState } from "react";
-import Radio from "./Radio";
 import DropDown from "./DropDown";
 
-const playerOneColorChoices = ["red", "orange", "yellow"];
-const playerOneShapeChoices = ["circle", "square"];
+const shapeChoices = ["circle", "square"];
+
+const playerOneColorChoices = ["red", "yellow", "orange"];
 
 const playerTwoColorChoices = ["black", "blue", "green"];
-const playerTwoShapeChoices = ["circle", "square"];
+
+const playerChoices = [
+  {
+    key: "playerOneColorChoice",
+    pretty: "Player One Color Choices",
+    choices: playerOneColorChoices,
+  },
+  {
+    key: "playerOneShapeChoice",
+    pretty: "Player One Shape Choice",
+    choices: shapeChoices,
+  },
+  {
+    key: "playerTwoColorChoice",
+    pretty: "Player Two Color Choice",
+    choices: playerTwoColorChoices,
+  },
+  {
+    key: "playerTwoShapeChoice",
+    pretty: "Player Two Shape Choice",
+    choices: shapeChoices,
+  },
+];
 
 interface Props {
-  playerOneCB: Function;
-  playerTwoCB: Function;
+  onChange: Function;
+  repaint: Function;
 }
 
-//TODO: Refactor
 const Players: React.FC<Props> = (props) => {
-  const { playerOneCB, playerTwoCB } = props;
+  const { onChange, repaint } = props;
   return (
-    <div className='radio-container'>
-      <p>Player One Choices</p>
-      <DropDown
-        name='playeronecolorchoices'
-        values={playerOneColorChoices}
-        cb={playerOneCB}
-      />
-      <DropDown
-        name='playeroneshapechoices'
-        values={playerOneShapeChoices}
-        cb={playerOneCB}
-      />
-      <p>Player Two Choices</p>
-      <DropDown
-        name='playertwocolorchoices'
-        values={playerTwoColorChoices}
-        cb={playerTwoCB}
-      />
-      <DropDown
-        name='playertwoshapechoices'
-        values={playerTwoShapeChoices}
-        cb={playerTwoCB}
-      />
-    </div>
+    <>
+      {playerChoices.map((choice) => (
+        <DropDown
+          name={choice.key}
+          pretty={choice.pretty}
+          values={choice.choices}
+          onChange={onChange}
+          repaint={repaint}
+        />
+      ))}
+    </>
   );
 };
 

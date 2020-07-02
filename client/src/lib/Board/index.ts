@@ -5,6 +5,7 @@
 export interface PieceProps {
   color: string;
   shape: string;
+  belongsTo: number;
 }
 
 // Parse the incoming string and ensure that it is ALWAYS a number.
@@ -15,10 +16,16 @@ const checkSize = (size: any) => {
 };
 
 //Utility to fill a row with pieces.
-const initalizeSquare = (color: string, shape: string, size: number) => {
+const initalizeSquare = (
+  color: string,
+  shape: string,
+  belongsTo: number,
+  size: number
+) => {
   return new Array(size).fill({
     color,
     shape,
+    belongsTo,
   });
 };
 
@@ -41,13 +48,13 @@ export const initalizeBoard = (sizeStr: string): PieceProps[][] => {
   let size = checkSize(sizeStr);
   let board: PieceProps[][] = new Array(size);
   for (let i = 0; i < 2; i++) {
-    board[i] = initalizeSquare("red", "circle", size);
+    board[i] = initalizeSquare("red", "circle", 0, size);
   }
   for (let i = 2; i < size - 2; i++) {
-    board[i] = initalizeSquare("", "", size);
+    board[i] = initalizeSquare("", "", -1, size);
   }
   for (let i = size - 2; i < size; i++) {
-    board[i] = initalizeSquare("#292929", "circle", size);
+    board[i] = initalizeSquare("#292929", "circle", 1, size);
   }
   return board;
 };
@@ -55,23 +62,20 @@ export const initalizeBoard = (sizeStr: string): PieceProps[][] => {
 // Update the pieces on the board to the player's desired settings.
 //TODO: Come up with better algorithm to do this.
 export const changeBoard = (
-  prevProp: PieceProps,
-  newProp: PieceProps,
-  board: PieceProps[][],
-  size: any
+  playerOneChanges: PieceProps,
+  playerTwoChanges: PieceProps,
+  board: PieceProps[][]
 ) => {
-  let correctedSize = checkSize(size);
-  let newBoard: PieceProps[][] = generateBoard(correctedSize);
-  if (prevProp.color !== newProp.color || prevProp.shape !== newProp.shape) {
-    for (let i = 0; i < correctedSize; i++) {
-      for (let j = 0; j < correctedSize; j++) {
-        if (board[i][j].shape === prevProp.shape)
-          newBoard[i][j].shape = newProp.shape;
-        if (board[i][j].color === prevProp.color)
-          newBoard[i][j].color = newProp.color;
+  let newBoard: PieceProps[][] = board;
+  for (let i = 0; i < newBoard.length; i++) {
+    for (let j = 0; j < newBoard.length; j++) {
+      if (board[i][j].belongsTo === 0) {
+        newBoard[i][j] = playerOneChanges;
+      }
+      if (board[i][j].belongsTo === 1) {
+        newBoard[i][j] = playerTwoChanges;
       }
     }
-    return newBoard;
   }
-  return board;
+  return newBoard;
 };
